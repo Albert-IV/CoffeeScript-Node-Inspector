@@ -1,0 +1,12 @@
+#! /bin/bash
+
+status=`ps -efww | grep -w "[n]ode-inspector" | awk -vpid=$$ '$2 != pid { print $2 }'`
+if [ -z "$status" ]; then
+    node-inspector &
+else
+    echo "Node Inspector already running."
+    echo "Visit http://127.0.0.1:8080/debug?port=5858 to start debugging."
+fi
+
+coffee --nodejs --debug-brk $1
+
